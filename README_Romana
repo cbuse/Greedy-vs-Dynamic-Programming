@@ -1,0 +1,97 @@
+Problema lui Sauron
+
+	Schema generala a unui algoritm Greedy(sursa:  
+	http://vega.unitbv.ro/~andonie/Cartea%20de%20algoritmi/cap6.htm)
+	
+	Un algoritm Greedy construieste solutia pas cu pas. Initial, multimea candidatilor
+selectati este vida. La fiecare pas, incercam sa adaugam acestei multimi cel mai
+promitator candidat, conform unui criteru de optim. Daca, dupa o astfel de adaugare,
+multimea de candidati selectati nu mai este fezabila, eliminam ultimul candidat adaugat;
+acesta nu va mai fi niciodata considerat. Daca, dupa adaugare, multimea de candidati
+selectati este fezabila, ultimul candidat adaugat va ramane de acum incolo in ea.
+De fiecare data cand largim multimea candidatilor selectati, verificam daca aceasta
+multime nu constituie o solutie posibila a problemei noastre. Daca algoritmul Greedy
+functioneaza corect, prima solutie gasita va fi totodata o solutie optima a problemei.
+
+	Cum se aplica tehnica Greedy pe problema lui Sauron:
+
+	La pasul "i" trebuie sa am o solutie optima pentru salariu 
+ca si cum problema ar contine doar elementele pana la pasul i.
+
+Criteriu de optim : suma dintre sclavul curent(de la pasul i) si fiecare dintre
+stapanii alesi pana acum e mai mare decat suma dintre stapanul intial al sclavului
+curent si fiecare dintre sclavii initiali ai stapanilor alesi.
+
+Initializare: intrucat indexul unui sclav trebuie sa fie mai mic decat indexul
+unui stapan va trebui sa alegem obligatoriu sclavul de pe pozitia 0 din vectorul
+de sclavi si stapanul de pe pozitia 1 din vectorul de stapani.
+
+Conditie de continuare: obligatoriu vom alege stapanul de pe pozitia i+1.
+
+Se disting 3 cazuri: 
+
+-Daca niciunul dintre stapanii deja alesi nu imbunatateste
+salariul minim, atunci adaug sclavul curent in lista.
+
+-Daca gasesc doar un stapan mai bun pentru sclavul de pe pozitia i
+iau din vectorul de stapani pe acel stapan si il fac sclav, iar in locul 
+stapanului devenit sclav il pun pe stapanul sclavului curent.
+
+-Daca am mai multe variante bune de imperechere va trebui s-o aleg pe cea care
+furnizeaza salariul minim. Astfel, aleg diferenta cea mai mare intre
+suma dintre sclavul curent(de la pasul i) si fiecare dintre
+stapanii alesi pana acum si suma dintre stapanul intial al sclavului
+curent si fiecare dintre sclavii initiali ai stapanilor alesi.
+
+	Complexitatea este O(n^2) pentru ca se fac 2 parcurgeri imbricate pentru
+vectorul de stapani(care are dimensiunea n) si vectorul de indecsi ai stapanilor
+(care are dimensiunea n/2). Celelalte operatii sunt in timp constant si 
+complexitatea poate sa scada in functie de if-urile pe care se intra. Toate 
+accesarile si setarile se fac in timp constant.
+Am folosit structura de date ArrayList intrucat accesarea, precum si setarea unei 
+pozitii la o anumita valoare se face in O(1).
+
+
+Problema cadrelor(COIN TOSSING)
+
+	Faptul ca in enunt erau matrici mi-a dat de  gandit ca seamana cu un exercitiu
+de laborator(generarea a N termeni cu aceeasi suma care dau un anumit rest la 
+impartirea cu 100). Mai era vorba si de modulo 100. Rezolvarea acestei probleme
+se lega de al N-lea termen Fibonacci(acesta era hint-ul dat la laborator).
+Mentionez ca am preluat functia de inmultire a doua matrici din  scheletul de cod
+din laboratorul 3. 
+
+	Problema a doua seamana foarte mult cu urmatoarea problema: probabilitatea
+sa nu dai cap/pajura de mai mult de k ori in n aruncari. Multiplicand de M ori
+aceasta problema obtinem problema cadrelor.
+Aici am gasit mai multe detalii: http://mathworld.wolfram.com/CoinTossing.html
+" The probability that no k consecutive tails will occur in n tosses is given by
+ F_(n+2)^((k))/2^n, where F_l^((k)) is a Fibonacci k-step number."
+ 
+	Am cautat informatii despre asta si am gasit: 
+http://en.wikipedia.org/wiki/Generalizations_of_Fibonacci_numbers#Fibonacci_numbers_of_higher_order.
+Sectiunea cea mai folositoare a fost generarea numerelor Fibonacci de ordin mai
+mare.
+	Alte surse: http://www.fq.math.ca/Scanned/5-2/brousseau.pdf
+http://download.springer.com/static/pdf/682/art%253A10.1007%252FBF01165157.pdf?auth66=1395753339_1b3b15a92852a66d262a637b208cf989&ext=.pdf
+Generare matrice Fibonacci: http://www.fq.math.ca/Scanned/20-1/kalman.pdf 
+
+Luand o matrice controlabila(are 1 deasupra diagonalei principale si 1 pe ultima linie)
+de dimensiune K+1, o ridicam la puterea N-K. O matrice controlabila genereaza
+recurenta numerelor Fibonacci de ordin mai mare.
+
+Inmultim ultima linie a acestei matrici cu un vector de dimensiune K + 1 de puteri
+ale lui 2(pe pozitia 0 se afla 2 la puterea 0, iar pe pozitia K se afla 2 la puterea K).
+
+Numarul astfel obtinut reprezinta in cate moduri pot alege o coloana astfel incat
+sa se respecte proprietatea din enunt. Cum sunt M coloane, numarul total de posibilitati
+este un produs, deci numarul de moduri se rdica la puterea M.
+
+Aproape peste tot se face modulo 40009 ca sa nu se iasa din int.
+
+Complexitatea este O(log n).
+
+Ridicarea la putere a unei matrici, precum si a unui numar se face in O(log n).
+Matricea controlabila este de dimensiune constanta, deci construirea ei se 
+face in O(1). Inmultirea a doua matrici constante este tot in O(1).
+
